@@ -52,7 +52,9 @@ jobs:
           name: ${{env.release_name}}
 
       - name: Generate Checksum
-        run: md5sum cryo_utilities > cu.md5
+        run: |
+          md5sum cryo_utilities > cu.md5
+          sha256sum cryo_utilities > cu.sha256
 
       - name: Delete Previous Latest Release
         uses: dev-drprasad/delete-tag-and-release@v0.2.1
@@ -66,7 +68,7 @@ jobs:
 
       - name: Create Unique Release
         shell: bash
-        run: hub release create ${{ env.release_name }} -m ${{ env.release_name }} -a cryo_utilities -a cu.md5
+        run: hub release create ${{ env.release_name }} -m ${{ env.release_name }} -a cryo_utilities -a cu.md5 -a cu.sha256
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -91,7 +93,9 @@ jobs:
           name: ${{env.release_name}}
 
       - name: Generate Checksum
-        run: md5sum cryo_utilities > cu.md5
+        run: |
+          md5sum cryo_utilities > cu.md5
+          sha256sum cryo_utilities > cu.sha256
 
       - name: Delete Previous Develop Release
         uses: dev-drprasad/delete-tag-and-release@v0.2.1
@@ -104,7 +108,7 @@ jobs:
 
       - name: Create Latest Release
         shell: bash
-        run: hub release create latest -m develop -a cryo_utilities -a cu.md5
+        run: hub release create latest -m develop -a cryo_utilities -a cu.sha256 -a cu.md5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
