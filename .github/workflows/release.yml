@@ -79,7 +79,7 @@ jobs:
   dev-release:
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/dev'
+    if: github.ref == 'refs/heads/develop'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -89,6 +89,9 @@ jobs:
         id: download
         with:
           name: ${{env.release_name}}
+
+      - name: Generate Checksum
+        run: md5sum cryo_utilities > cu.md5
 
       - name: Delete Previous Develop Release
         uses: dev-drprasad/delete-tag-and-release@v0.2.1
@@ -101,7 +104,7 @@ jobs:
 
       - name: Create Latest Release
         shell: bash
-        run: hub release create latest -m develop -a cryo_utilities
+        run: hub release create latest -m develop -a cryo_utilities -a cu.md5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
