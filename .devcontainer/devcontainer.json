@@ -1,0 +1,21 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/go
+{
+	"name": "steam-deck-utilities",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+	"features": {
+		"ghcr.io/devcontainers/features/go:1": {
+		},
+		"ghcr.io/guiyomh/features/golangci-lint:0": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers/features/common-utils:2": {
+			"upgradePackages": true,
+		},
+	},
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "bash .devcontainer/post-create.sh"
+}
